@@ -1,0 +1,51 @@
+name: project-app-team-repo
+
+services:
+  app:
+    build: ./app
+    container_name: web-app
+    hostname: web-app
+    volumes: ["./app/src:/appcode"]
+    environment:
+      - WATCHPACK_POLLING=true
+      # FRONTEND -> BACKEND inside Docker network
+      - API_BASE_URL=http://api:4000
+    ports:
+      - 8501:8501
+    depends_on:
+      - api
+
+  api:
+    build: ./api
+    container_name: web-api
+    hostname: web-api
+    volumes: ["./api:/apicode"]
+    environment:
+      - WATCHPACK_POLLING=true
+      # BACKEND -> DB inside Docker network
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=changeme
+      - DB_NAME=SpotLight
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=4000
+    ports:
+      - 4000:4000
+    depends_on:
+      - db
+
+  db:
+    env_file:
+      - ./api/.env
+    image: mysql:9
+    container_name: mysql_db
+    hostname: db
+    volumes:
+      - "./database-files:/docker-entrypoint-initdb.d/:ro"
+      - "mysql_data:/var/lib/mysql"
+    ports:
+      - 3200:3306
+
+volumes:
+  mysql_data:

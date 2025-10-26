@@ -1,0 +1,9 @@
+services:
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: SpotLight
+    volumes:
+      - ./database-files:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"

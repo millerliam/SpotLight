@@ -1,0 +1,21 @@
+.DS_Store
+secrets.toml
+__pycache__
+secrets/
+.env
+.env.local
+*/logs/*
+.vscode/
+.idea/
+# env + venv
+*.env
+.venv/
+
+# env + venv
+*.env
+.venv/
+app/src/.venv/
+api/.venv/
+__pycache__/
+*.pyc
+.DS_Store
