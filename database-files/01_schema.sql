@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
 
 CREATE TABLE IF NOT EXISTS Orders (
   orderID INT AUTO_INCREMENT PRIMARY KEY,
-  `date` DATE,
+  date DATE,
   total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   cID INT NOT NULL,
   status ENUM('pending','active','scheduled','fulfilled','canceled') NOT NULL DEFAULT 'pending',
