@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
   rating INT,
   cID INT,
   lastUpdate TIMESTAMP,
+  is_deleted TINYINT(1) NOT NULL DEFAULT 0, 
   CONSTRAINT chk_ratingrange CHECK (rating >= 0 AND rating <= 5),
   FOREIGN KEY (spotID) REFERENCES Spot(spotID) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (cID) REFERENCES Customers(cID) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -70,6 +71,7 @@ CREATE TABLE IF NOT EXISTS Orders (
   date DATE,
   total INT,
   cID INT,
+  status ENUM('pending','confirmed','scheduled','fulfilled','canceled') DEFAULT 'pending',  
   CONSTRAINT chk_totalnotnegative CHECK (total >= 0),
   FOREIGN KEY (cID) REFERENCES Customers(cID) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -88,10 +90,12 @@ CREATE TABLE IF NOT EXISTS ProcessedOrder (
   FOREIGN KEY (processorID) REFERENCES SalesMan(eID) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-
 CREATE TABLE IF NOT EXISTS SpotOrder (
   spotID INT,
   orderID INT,
+  spot_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00,  
+  lease_start_date DATE,                           
+  lease_end_date DATE,                            
   FOREIGN KEY (spotID) REFERENCES Spot(spotID) ON DELETE CASCADE,
   FOREIGN KEY (orderID) REFERENCES Orders(orderID) ON DELETE CASCADE
 );
