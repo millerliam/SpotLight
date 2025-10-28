@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS Orders (
   date DATE,
   total INT,
   cID INT,
-  status ENUM('pending','confirmed','scheduled','fulfilled','canceled') DEFAULT 'pending',  
+  status ENUM('pending','confirmed','active','fulfilled','canceled') DEFAULT 'pending',  
   CONSTRAINT chk_totalnotnegative CHECK (total >= 0),
   FOREIGN KEY (cID) REFERENCES Customers(cID) ON UPDATE CASCADE ON DELETE RESTRICT
 );
