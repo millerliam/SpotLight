@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS Employee (
   fNAME VARCHAR(50),
   email VARCHAR(50),
   Avatar_URL VARCHAR(100),
-  Field VARCHAR(50),
   role ENUM('sales','o&m') NOT NULL
 );
 
